@@ -44,41 +44,37 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 # === ルーティング (セキュリティ強化版) ===
+# ↓ この関数を丸ごと上書きしてください
 
 @app.get("/")
 async def get_index(request: Request, key: Optional[str] = None):
     """
     ルートアクセス制御:
-    1. クッキー 'ryoshian_auth' を持っているか確認 -> OKならindex表示
-    2. URLパラメータ ?key=SECRET があるか確認 -> OKならクッキーを焼いてindex表示
-    3. どちらも無ければ info.html へリダイレクト
+    1. URLパラメータ ?key=SECRET がある場合 -> Cookieを焼いて、Key無しのURLへ即リダイレクト（隠蔽）
+    2. クッキー 'ryoshian_auth' を持っている場合 -> index.html を表示
+    3. どちらも無い場合 -> info.html へリダイレクト
     """
     
-    # 設定したいパスワード（自由に変更してください）
-    SECRET_KEY = "gokuraku2045"
+    # パスワード
+    SECRET_KEY = "Gfa!ryoshian"
     
     # クッキーチェック
     auth_cookie = request.cookies.get("ryoshian_auth")
     
-    # 認証判定
-    is_cookie_ok = (auth_cookie == "granted")
-    is_key_ok = (key == SECRET_KEY)
-    
-    if is_cookie_ok or is_key_ok:
-        # === 認証OK: index.html を返す ===
-        if os.path.exists("static/index.html"):
-            response = FileResponse("static/index.html")
-        else:
-            response = FileResponse("index.html")
-        
-        # パスワードで入った場合は、次回用にクッキー(通行証)を渡す
-        if is_key_ok:
-            # 30日間有効なクッキーをセット
-            response.set_cookie(key="ryoshian_auth", value="granted", max_age=60*60*24*30)
-            
+    # === パターンA: パスワード付きで来た（初回アクセス） ===
+    if key == SECRET_KEY:
+        # Cookieをセットしつつ、キー無しのトップページへ転送してURLを隠す
+        response = RedirectResponse(url="/", status_code=302)
+        response.set_cookie(key="ryoshian_auth", value="granted", max_age=60*60*24*30)
         return response
+
+    # === パターンB: すでに認証済み（Cookieあり） ===
+    if auth_cookie == "granted":
+        if os.path.exists("static/index.html"):
+            return FileResponse("static/index.html")
+        return FileResponse("index.html")
     
-    # === 認証NG: info.html へ飛ばす ===
+    # === パターンC: 一般人（infoへ） ===
     return RedirectResponse(url="/static/info.html")
 
 # 静的ファイルマウント
