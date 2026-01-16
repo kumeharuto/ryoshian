@@ -3,8 +3,9 @@ import json
 import base64
 import asyncio
 from typing import List, Optional
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Form, UploadFile, File
-from fastapi.responses import HTMLResponse, FileResponse
+# ★追加: Request をインポート
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Form, UploadFile, File, Request
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -42,20 +43,50 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-# === ルーティング ===
+# === ルーティング (セキュリティ強化版) ===
 
 @app.get("/")
-async def get_index():
-    if os.path.exists("static/index.html"):
-        return FileResponse("static/index.html")
-    return FileResponse("index.html")
+async def get_index(request: Request, key: Optional[str] = None):
+    """
+    ルートアクセス制御:
+    1. クッキー 'ryoshian_auth' を持っているか確認 -> OKならindex表示
+    2. URLパラメータ ?key=SECRET があるか確認 -> OKならクッキーを焼いてindex表示
+    3. どちらも無ければ info.html へリダイレクト
+    """
+    
+    # 設定したいパスワード（自由に変更してください）
+    SECRET_KEY = "gokuraku2045"
+    
+    # クッキーチェック
+    auth_cookie = request.cookies.get("ryoshian_auth")
+    
+    # 認証判定
+    is_cookie_ok = (auth_cookie == "granted")
+    is_key_ok = (key == SECRET_KEY)
+    
+    if is_cookie_ok or is_key_ok:
+        # === 認証OK: index.html を返す ===
+        if os.path.exists("static/index.html"):
+            response = FileResponse("static/index.html")
+        else:
+            response = FileResponse("index.html")
+        
+        # パスワードで入った場合は、次回用にクッキー(通行証)を渡す
+        if is_key_ok:
+            # 30日間有効なクッキーをセット
+            response.set_cookie(key="ryoshian_auth", value="granted", max_age=60*60*24*30)
+            
+        return response
+    
+    # === 認証NG: info.html へ飛ばす ===
+    return RedirectResponse(url="/static/info.html")
 
 # 静的ファイルマウント
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 else:
     app.mount("/static", StaticFiles(directory="."), name="static")
-    app.mount("/", StaticFiles(directory="."), name="root")
+    # app.mount("/", ... ) はルートと競合するため削除または注意して使用
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -66,76 +97,45 @@ async def websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         manager.disconnect(websocket)
 
-# === ★ここを修正しました (Q1-Q20に対応) ===
+# === Q1-Q19対応フォーム受信 ===
 @app.post("/submit")
 async def handle_form(
     q1: str = Form(""),  # Nickname
-    q2: str = Form(""),  # Age (文字として受け取る)
+    q2: str = Form(""),  # Age
     q3: str = Form(""),  # Color
-    q4_1: int = Form(0), # 過ごすなら(時間)
-    q4_2: int = Form(0), # 過ごすなら(天気)
-    q4_3: int = Form(0), # 過ごすなら(季節)
-    q5: int = Form(0),   # 行動
-    q6_1: int = Form(0), # 住処(場所)
-    q6_2: int = Form(0), # 住処(音)
-    q6_3: int = Form(0), # 住処(感覚)
-    q7: int = Form(0),   # 香り
-    q8: str = Form(""),  # 旅行
-    q9: int = Form(0),   # 願い
-    q10: int = Form(0),  # エネルギー
-    q11: int = Form(0),  # 因果
-    q12: int = Form(0),  # 慈悲
-    q13: int = Form(0),  # 無常
-    q14: int = Form(0),  # 死生
-    q15: int = Form(0),  # 向かう
-    q16: int = Form(0),  # 還る
-    q17: str = Form(""), # 残すもの
-    q18: str = Form(""), # 好きなもの
-    q19: str = Form(""), # 嫌いなもの
-    image_b64: str = Form("") # 画像データ
+    q4_1: int = Form(0), # Time
+    q4_2: int = Form(0), # Weather
+    q4_3: int = Form(0), # Season
+    q5: int = Form(0),   # Approach
+    q6_1: int = Form(0), # Place
+    q6_2: int = Form(0), # Sound
+    q6_3: int = Form(0), # Sense
+    q7: int = Form(0),   # Scent
+    q8: str = Form(""),  # Destination
+    q9: int = Form(0),   # Wish
+    q10: int = Form(0),  # Drive
+    q11: int = Form(0),  # Causality
+    q12: int = Form(0),  # Compassion
+    q13: int = Form(0),  # Impermanence
+    q14: int = Form(0),  # Life/Death
+    q15: int = Form(0),  # Heading
+    q16: int = Form(0),  # Returning
+    q17: str = Form(""), # Legacy (Keep)
+    q18: str = Form(""), # Likes
+    q19: str = Form(""), # Avoids
+    image_b64: str = Form("") # Image
 ):
     print(f"📩 受信: {q1} ({q2})")
     
-    # TouchDesignerなどが扱いやすいJSON形式にまとめる
     data = {
         "type": "form_submission",
-        "identity": {
-            "nickname": q1,
-            "age": q2,
-            "color": q3
-        },
-        "conditions": {
-            "time": q4_1,
-            "weather": q4_2,
-            "season": q4_3
-        },
-        "adolescence": {
-            "approach": q5,
-            "environment_place": q6_1,
-            "environment_sound": q6_2,
-            "environment_sense": q6_3,
-            "scent": q7
-        },
-        "adulthood": {
-            "destination": q8,
-            "wish_direction": q9,
-            "drive": q10
-        },
-        "philosophy": {
-            "causality": q11,
-            "compassion": q12,
-            "impermanence": q13,
-            "life_death": q14
-        },
-        "afterlife": {
-            "heading": q15,
-            "returning": q16
-        },
-        "legacy": {
-            "keep": q17,
-            "likes": q18,
-            "avoids": q19
-        },
+        "identity": { "nickname": q1, "age": q2, "color": q3 },
+        "conditions": { "time": q4_1, "weather": q4_2, "season": q4_3 },
+        "adolescence": { "approach": q5, "environment_place": q6_1, "environment_sound": q6_2, "environment_sense": q6_3, "scent": q7 },
+        "adulthood": { "destination": q8, "wish_direction": q9, "drive": q10 },
+        "philosophy": { "causality": q11, "compassion": q12, "impermanence": q13, "life_death": q14 },
+        "afterlife": { "heading": q15, "returning": q16 },
+        "legacy": { "keep": q17, "likes": q18, "avoids": q19 },
         "has_image": bool(image_b64),
         "image_data": image_b64
     }
@@ -158,6 +158,5 @@ async def upload_satellite(session_id: str = Form(...), image: UploadFile = File
 
 if __name__ == "__main__":
     import uvicorn
-    # Renderでは環境変数PORTが使われるため、それに対応
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
