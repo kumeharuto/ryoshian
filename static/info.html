@@ -30,9 +30,9 @@
             background: rgba(0, 0, 0, 0.4); z-index: -1; 
         }
         /* ★動画を確実に見せるための設定 */
-        html { background-color: #000; touch-action: manipulation;} /* 待機色はhtmlに設定 */
+        html { background-color: #000; touch-action: manipulation;} 
         body {
-            background-color: transparent; /* bodyは透明にして動画を通す */
+            background-color: transparent; 
             color: var(--text-color);
             font-family: var(--font-main); margin: 0; padding: 0;
             min-height: 100vh; overflow-x: hidden;
@@ -118,6 +118,28 @@
 
         .footer { text-align: center; font-size: 0.7rem; color: #444; margin-top: 40px; padding-bottom: 40px; }
 
+        /*ポスター＆ポップアップ用スタイル*/
+        .poster-img { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto 30px; border: 1px solid #333; }
+        .info-text-block { text-align: center; margin-bottom: 40px; font-feature-settings: "palt"; }
+        
+        #opening-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        #opening-popup.show { opacity: 1; pointer-events: auto; }
+        
+        .popup-content {
+            width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto;
+            background: #000; border: 1px solid #444; padding: 20px;
+            text-align: center; position: relative;
+        }
+        .close-popup-btn {
+            margin-top: 20px; background: transparent; border: 1px solid #fff; color: #fff;
+            padding: 10px 30px; cursor: pointer; font-family: var(--font-main);
+        }
+
         .hidden { display: none !important; }
         .lang-jp .lang-en { display: none; }
         .lang-en .lang-jp { display: none; }
@@ -148,6 +170,8 @@
             <li><div class="menu-item text-marbling" onclick="scrollToSection('concept')">Concept<span class="menu-sub lang-jp">コンセプト</span><span class="menu-sub lang-en">Core idea</span></div></li>
             <li><div class="menu-item text-marbling" onclick="scrollToSection('explanation')">Explanation<span class="menu-sub lang-jp">作品＆用語解説</span><span class="menu-sub lang-en">Guide & key terms</span></div></li>
             <li><div class="menu-item text-marbling" onclick="scrollToSection('background')">Background<span class="menu-sub lang-jp">背景設定（ネタバレ）</span><span class="menu-sub lang-en">Story (spoilers)</span></div></li>
+            
+            <li><div class="menu-item text-marbling" onclick="scrollToSection('exhibition')">展示情報<span class="menu-sub lang-en">Info</span></div></li>
             <li><div class="menu-item text-marbling" onclick="scrollToSection('about')">About Us<span class="menu-sub lang-jp">プロジェクト紹介</span><span class="menu-sub lang-en">Project & team</span></div></li>
         </ul>
     </div>
@@ -215,6 +239,33 @@
             <p class="lang-en">The viewer temporarily relinquishes identity. Before the monitor, they are asked: Not "Where will I return?" but "Where will I end up returning?" Ryoshi-an offers not an answer, but the very method of reception in an era where "only" the answer exists.</p>
         </div>
 
+        <div id="exhibition" class="content-section">
+            <h3 class="text-marbling">Exhibition Info
+                <span class="section-sub lang-jp">展示情報</span>
+                <span class="section-sub lang-en">Info</span>
+            </h3>
+            
+            <img src="/static/ryoshian_poster_web2.jpg" alt="Exhibition Poster" class="poster-img">
+            
+            <div class="info-text-block">
+                <h4 style="border:none; margin:20px 0 10px; padding:0; text-align:center;">
+                    <span class="lang-jp">展示場所</span><span class="lang-en">Venue</span>
+                </h4>
+                <p style="margin:0; line-height:1.8;">
+                    <span class="lang-jp">横幅美術大学 映像メディアデザイン<br>3号館2階 特別展示室(3-23B)</span>
+                    <span class="lang-en">Yokohama Univ. of Art & Design<br>Image Media Design<br>Bldg.3 2F, Special Exhibition Room (3-23B)</span>
+                </p>
+
+                <h4 style="border:none; margin:30px 0 10px; padding:0; text-align:center;">
+                    <span class="lang-jp">展示期間</span><span class="lang-en">Period</span>
+                </h4>
+                <p style="margin:0; line-height:1.8;">
+                    <span class="lang-jp">学内展：2/12(thu.) - 15(sun.)</span>
+                    <span class="lang-en">On-Campus Exhibition: Feb 12 (Thu) - 15 (Sun)</span>
+                </p>
+            </div>
+        </div>
+
         <div id="about" class="content-section about-section">
             <h3 class="text-marbling">About Us
                 <span class="section-sub lang-jp">プロジェクト紹介</span>
@@ -222,7 +273,6 @@
             </h3>
             <p style="margin-top: 40px; font-size: 1.1rem; letter-spacing: 0.05em;">We are GOKURAKU FINE ARTS.</p>
     
-            <!-- ロゴ画像 -->
             <div style="margin: 50px auto;">
                 <img src="/static/logo.PNG" alt="GOKURAKU FINE ARTS" style="max-width: 200px; height: auto;">
             </div>
@@ -254,6 +304,26 @@
         <div class="footer">© GOKURAKU FINE ARTS</div>
     </div>
 
+    <div id="opening-popup">
+        <div class="popup-content">
+            <img src="/static/ryoshian_poster_web2.jpg" alt="Exhibition Poster" style="width:100%; height:auto; margin-bottom:15px;">
+            
+            <div style="font-size:0.9rem; line-height:1.6; color:#ddd; margin-bottom:20px;">
+                <p class="lang-jp" style="margin-bottom:15px;">
+                    <strong>横幅美術大学 映像メディアデザイン</strong><br>
+                    3号館2階 特別展示室(3-23B)<br>
+                    学内展：2/12(thu.) - 15(sun.)
+                </p>
+                <p class="lang-en" style="margin-bottom:0; font-size:0.8rem; color:#aaa;">
+                    <strong>Yokohama Univ. of Art & Design</strong><br>
+                    Bldg.3 2F, Special Exhibition Room (3-23B)<br>
+                    Feb 12 (Thu) - 15 (Sun)
+                </p>
+            </div>
+            
+            <button class="close-popup-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         let currentLang = urlParams.get('lang') || 'jp';
@@ -261,6 +331,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             setLanguage(currentLang);
             initMarbling();
+            // ポップアップ表示
+            setTimeout(() => {
+                document.getElementById('opening-popup').classList.add('show');
+            }, 500);
         });
 
         function initMarbling() {
@@ -304,9 +378,10 @@
                 setTimeout(() => { el.scrollIntoView({ behavior: 'smooth' }); }, 300);
             }
         }
+
+        function closePopup() {
+            document.getElementById('opening-popup').classList.remove('show');
+        }
     </script>
-        <div class="footer" style="text-align: center; font-size: 0.7rem; color: #444; margin-top: 40px; padding-bottom: 20px;">
-            ©GOKURAKU FINE ARTS
-        </div>
 </body>
 </html>
