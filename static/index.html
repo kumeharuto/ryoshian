@@ -360,9 +360,19 @@
         .bar-inner { position: absolute; left: 0; top: 0; height: 100%; background: #fff; width: 0%; transition: width 0.1s linear; }
         .bar-anim { animation: growBar 20s linear forwards; }
         @keyframes growBar { from { width: 0%; } to { width: 100%; } }
-        .tap-hint { margin-top: 10px; font-size: 0.7rem; color: #888; align-self: flex-end; animation: blink 2s infinite; }
-        @keyframes blink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
+        /* --- 変更後 (追加) --- */
+        .loading-nav {
+            display: flex; justify-content: space-between; width: 100%; margin-top: 15px;
+            font-size: 0.8rem; color: #888;
+        }
+        .nav-btn {
+            padding: 10px 20px; cursor: pointer; transition: color 0.3s;
+            border: 1px solid transparent; /* タップ領域確保 */
+        }
+        .nav-btn:active { color: #fff; }
+        .nav-btn:hover { color: #ccc; }
+        
         .btn-back-top {
             margin-top: 40px; border: 1px solid #444; background: transparent; color: #888;
             padding: 10px 20px; font-size: 0.75rem; cursor: pointer; transition: 0.3s;
@@ -851,17 +861,29 @@
     </div>
 
     <div id="loading-overlay">
-        <div class="loading-content-box" onclick="nextLoadingTerm()">
+        
+        <div class="section-header" style="margin: 0 0 60px 0;">
+            <h2 style="font-size:1.2rem;">
+                <span class="lang-jp">畳へお上りください</span>
+                <span class="lang-en">Please step onto the Tatami</span>
+            </h2>
+        </div>
+        <div class="loading-content-box">
             <div class="loading-text-wrapper" id="loading-text-wrapper">
                 </div>
             <div class="loading-progress-bar">
                 <div class="bar-inner" id="loading-bar"></div>
             </div>
-            <div class="tap-hint">
-                <span class="lang-jp">タップで次へ ▷</span><span class="lang-en">Tap for next ▷</span>
+            
+            <div class="loading-nav">
+                <div class="nav-btn" onclick="prevLoadingTerm()">
+                    ◁ <span class="lang-jp">戻る</span><span class="lang-en">Prev</span>
+                </div>
+                <div class="nav-btn" onclick="nextLoadingTerm()">
+                    <span class="lang-jp">次へ</span><span class="lang-en">Next</span> ▷
+                </div>
             </div>
         </div>
-        
         <div style="margin-top:40px; text-align:center;">
             <div id="qrcode-loading" style="background:#000; padding:10px; display:inline-block; border:1px solid #333;"></div>
             <p style="margin-top:10px; font-size:0.7rem; color:#888;" class="lang-jp">待ち時間に作品解説を読む</p>
@@ -1269,6 +1291,15 @@
             } else {
                 container.innerHTML = `<h4 ${style}>${item.title_en}</h4><p>${item.desc_en}</p>`;
             }
+        }
+
+        function prevLoadingTerm() {
+            clearInterval(slideTimer);
+            // 現在のインデックスを1つ戻す（0のときは最後の要素へ）
+            loadingIndex = (loadingIndex - 1 + loadingContent.length) % loadingContent.length;
+            updateLoadingText();
+            resetProgressBar();
+            slideTimer = setInterval(autoSlide, 20000);
         }
 
         function nextLoadingTerm() {
