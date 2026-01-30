@@ -835,9 +835,10 @@
 
             <div class="qr-section">
                 <label class="lang-jp">画像奉納</label><label class="lang-en">Image Offering</label>
+                <label class="lang-jp">スマホで読み取ってください</label><label class="lang-en">Scan with your smartphone</label>
                 <div id="qrcode"></div>
-                <div id="qr-status" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-jp">スマホで読み取ってください</div>
-                <div id="qr-status-en" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-en">Scan with your smartphone</div>
+                <!-- <div id="qr-status" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-jp">スマホで読み取ってください</div>
+                <div id="qr-status-en" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-en">Scan with your smartphone</div> -->
                 <img id="received-image" class="received-thumb">
                 <button id="reset-img-btn" class="hidden" onclick="resetImage()" style="margin-top:25px; background:none; border:none; color:#fff; border-bottom:1px solid #fff; cursor:pointer; font-size:0.8rem;">× <span class="lang-jp">取り消す</span><span class="lang-en">Cancel</span></button>
             </div>
@@ -1322,20 +1323,61 @@
             void bar.offsetWidth; // trigger reflow
             bar.classList.add('bar-anim');
         }
+/* --- 変更後 (未入力チェックを追加した関数) --- */
+async function submitForm(btn) {
+            // ▼▼▼ 追加: 未入力チェックと確認 ▼▼▼
+            const checkList = [
+                { id: 'q1', labelJP: 'ニックネーム', labelEN: 'Nickname' },
+                { id: 'q2', labelJP: '年齢', labelEN: 'Age' },
+                { id: 'q3', labelJP: '好きな色', labelEN: 'Favorite Color' },
+                { id: 'q8', labelJP: '旅行に行くなら', labelEN: 'Destination' },
+                { id: 'q17', labelJP: 'ひとつだけ残すなら', labelEN: 'One Thing to Keep' },
+                { id: 'q18', labelJP: '好きなもの', labelEN: 'Likes' },
+                { id: 'q19', labelJP: '嫌いなもの', labelEN: 'Avoids' }
+            ];
 
-        async function submitForm(btn) {
+            let emptyItems = [];
+
+            // テキスト入力欄のチェック
+            checkList.forEach(item => {
+                const el = document.getElementById(item.id);
+                if (!el || !el.value.trim()) {
+                    emptyItems.push(currentLang === 'jp' ? item.labelJP : item.labelEN);
+                }
+            });
+
+            // 画像のチェック
+            if (!receivedImageBase64) {
+                emptyItems.push(currentLang === 'jp' ? '画像奉納' : 'Image Offering');
+            }
+
+            // 未入力がある場合、確認ダイアログを表示
+            if (emptyItems.length > 0) {
+                const msg = (currentLang === 'jp')
+                    ? "以下の項目が未入力です。\nこのまま送信してもよろしいですか？\n\n・" + emptyItems.join("\n・")
+                    : "The following fields are empty.\nAre you sure you want to submit?\n\n- " + emptyItems.join("\n- ");
+
+                // 「キャンセル」が押されたら送信を中止
+                if (!confirm(msg)) {
+                    return;
+                }
+            }
+            // ▲▲▲ 追加ここまで ▲▲▲
+
             if(btn) btn.classList.add('clicked');
             
             const overlay = document.getElementById('loading-overlay');
             overlay.style.display = 'flex';
 
             const qrLoading = document.getElementById("qrcode-loading");
-            qrLoading.innerHTML = "";
-            new QRCode(qrLoading, { 
-                text: window.location.origin + "/static/info.html", 
-                width: 120, height: 120,
-                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.H
-            });
+            if(qrLoading) {
+                qrLoading.innerHTML = "";
+                new QRCode(qrLoading, { 
+                    text: window.location.origin + "/static/info.html", 
+                    width: 120, height: 120,
+                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.H
+                });
+            }
 
             loadingIndex = 0;
             updateLoadingText();
@@ -1348,7 +1390,10 @@
             const formData = new FormData();
             formData.append('image_b64', receivedImageBase64);
             const ids = ['q1','q2','q3','q4_1','q4_2','q4_3','q5','q6_1','q6_2','q6_3','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19'];
-            ids.forEach(id => formData.append(id, document.getElementById(id).value || ""));
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) formData.append(id, el.value || "");
+            });
 
             try {
                 const res = await fetch('/submit', { method: 'POST', body: formData });
