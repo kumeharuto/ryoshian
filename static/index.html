@@ -157,26 +157,43 @@
             -webkit-background-clip: text; background-clip: text; color: transparent;
             transform: scale(0.98);
         }
-
-        .clean-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid #444; color: #fff; padding: 12px 0; font-size: 1.1rem; font-family: var(--font-main); border-radius: 0; }
-        .clean-input:focus { border-bottom: 1px solid #fff; }
+/* ボックス型に変更 */
+.clean-input { 
+            width: 100%; 
+            background: rgba(255,255,255,0.05); /* 背景色追加 */
+            border: 1px solid #444; /* 全周ボーダーに変更 */
+            color: #fff; 
+            padding: 15px; /* タップしやすいようパディング増量 */
+            font-size: 1.1rem; 
+            font-family: var(--font-main); 
+            border-radius: 0; 
+        }
+        .clean-input:focus { 
+            border-color: #fff; 
+            background: rgba(255,255,255,0.1); 
+        }
         
         .clean-textarea {
             width: 100%; background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff;
             padding: 15px; font-size: 1rem; font-family: var(--font-main); resize: none; border-radius: 0; line-height: 1.8;
         }
         .clean-textarea:focus { border-color: #fff; background: rgba(255,255,255,0.1); }
+        
         .clean-textarea::placeholder, .clean-input::placeholder, .color-picker-trigger {
             color: #666; font-size: 0.8rem;
         }
 
+        /* カラーピッカー：角丸ボックス型に変更 */
         .color-picker-trigger {
-            width: 100%; padding: 12px 0;
-            border-bottom: 1px solid #444;
-            cursor: pointer; text-align: center;
+            width: 100%; 
+            padding: 15px; /* 高さ確保 */
+            border: 1px solid #444; /* 全周ボーダー */
+            background: rgba(255,255,255,0.05); /* 背景色追加 */
+            cursor: pointer; 
+            text-align: center;
+            border-radius: 6px; /* 角丸にする */
         }
         .color-picker-trigger.selected { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
-
         #color-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); z-index: 9995;
