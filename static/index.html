@@ -904,10 +904,15 @@
         let currentHue = 0;
         let currentLightness = 50;
         let curH = 0;
-        let curS = 50;
-        let curL = 50;
+        // let curS = 50;
+        // let curL = 50;
         let isDraggingHue = false;
         let isDraggingSL = false;
+        // ▼▼▼ 変更: HSL直接管理ではなく、ポインター位置(HSV的)を管理する変数を追加 ▼▼▼
+        let curS = 100; // 初期値：彩度100 (HSL変換後用)
+        let curL = 50;  // 初期値：輝度50  (HSL変換後用)
+        let ptrX = 100; // X座標(彩度S) 0-100% (初期値:右端)
+        let ptrY = 0;   // Y座標(明度V) 0-100% (初期値:上端 = V100)
 
         function initColorPickerEvents() {
             const ring = document.getElementById('color-hue-ring');
@@ -924,19 +929,37 @@
                 applyColor();
                 e.preventDefault(); // スクロール防止
             };
-
+            // ▼▼▼ 修正: handleSL でポインター座標(HSV)を更新する ▼▼▼
             const handleSL = (e) => {
                 const rect = disc.getBoundingClientRect();
                 const touch = e.touches ? e.touches[0] : e;
                 let x = (touch.clientX - rect.left) / rect.width;
                 let y = (touch.clientY - rect.top) / rect.height;
+                
+                // 範囲制限 0〜1
                 x = Math.max(0, Math.min(1, x));
                 y = Math.max(0, Math.min(1, y));
-                curS = x * 100;
-                curL = (1 - y) * 100;
+
+                // ポインター位置(%)を保存
+                ptrX = x * 100; 
+                ptrY = y * 100;
+
                 applyColor();
-                e.preventDefault(); // スクロール防止
+                e.preventDefault(); 
             };
+            // ▲▲▲ 修正ここまで ▲▲▲
+            // const handleSL = (e) => {
+            //     const rect = disc.getBoundingClientRect();
+            //     const touch = e.touches ? e.touches[0] : e;
+            //     let x = (touch.clientX - rect.left) / rect.width;
+            //     let y = (touch.clientY - rect.top) / rect.height;
+            //     x = Math.max(0, Math.min(1, x));
+            //     y = Math.max(0, Math.min(1, y));
+            //     curS = x * 100;
+            //     curL = (1 - y) * 100;
+            //     applyColor();
+            //     e.preventDefault(); // スクロール防止
+            // };
 
             // タッチ開始
             ring.addEventListener('touchstart', (e) => { isDraggingHue = true; handleHue(e); }, {passive: false});
@@ -967,30 +990,50 @@
             });
         }
 
+        // ▼▼▼ 修正: applyColor で HSV(位置) → HSL(色) 変換を行う ▼▼▼
         function applyColor() {
             const disc = document.getElementById('color-lightness-disc');
             const preview = document.getElementById('color-preview');
             
-            // 彩度・明度パネルの背景色を現在の色相にする
+            // パネル背景は色相のみ反映
             disc.style.backgroundColor = `hsl(${curH}, 100%, 50%)`;
             
-            // プレビューの更新
+            // --- HSV to HSL 変換ロジック ---
+            // HSV: S = ptrX(0-1), V = 1 - ptrY(0-1)
+            let s_hsv = ptrX / 100;
+            let v_hsv = 1 - (ptrY / 100);
+
+            // HSLのLを計算: L = V * (1 - S/2)
+            let l_hsl = v_hsv * (1 - s_hsv / 2);
+            
+            // HSLのSを計算
+            let s_hsl = 0;
+            if (l_hsl > 0 && l_hsl < 1) {
+                s_hsl = (v_hsv - l_hsl) / Math.min(l_hsl, 1 - l_hsl);
+            }
+
+            // グローバル変数 curS, curL を更新 (0-100%表記に)
+            curS = s_hsl * 100;
+            curL = l_hsl * 100;
+
+            // プレビューと値を更新
             const color = `hsl(${curH}, ${curS}%, ${curL}%)`;
             preview.style.backgroundColor = color;
             selectedColorHex = rgbToHex(window.getComputedStyle(preview).backgroundColor);
 
-            // ポインターの位置更新（画像に合わせて半径を120に変更）
+            // ポインター位置の更新 (HSLではなく、保存したptrX/ptrYを使う)
             const hPointer = document.getElementById('hue-pointer');
             const angleRad = (curH - 90) * (Math.PI / 180);
-            const radius = 130; // 円周の真上に乗るように調整
-            const centerX = 140; // wrapper(280px)の半分
+            const radius = 130; 
+            const centerX = 140; 
             const centerY = 140;
             hPointer.style.left = (centerX + radius * Math.cos(angleRad)) + 'px';
             hPointer.style.top = (centerY + radius * Math.sin(angleRad)) + 'px';
 
             const slPointer = document.getElementById('sl-pointer');
-            slPointer.style.left = curS + '%';
-            slPointer.style.top = (100 - curL) + '%';
+            // 四角の中のポインターは指の位置(ptrX, ptrY)に追従させる
+            slPointer.style.left = ptrX + '%';
+            slPointer.style.top = ptrY + '%';
         }
 
         // 便利な補助関数：RGB文字列をHEXに変換
