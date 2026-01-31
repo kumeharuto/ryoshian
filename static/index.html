@@ -1091,21 +1091,45 @@
             applyColor();
         }
 
+        // function confirmColor() {
+        //     if(selectedColorHex) {
+        //         document.getElementById('q3').value = selectedColorHex;
+        //         const trigger = document.getElementById('color-trigger');
+        //         trigger.innerText = selectedColorHex;
+                
+        //         // === 案3: 背景色バッジ化 ===
+        //         // 背景色を選択した色にする
+        //         trigger.style.backgroundColor = selectedColorHex;
+                
+        //         // 明度(currentLightness: 0~100) に応じて文字色を白/黒に振り分け
+        //         // 50%より明るい色は黒文字、暗い色は白文字で見やすくする
+        //         trigger.style.color = (currentLightness > 50) ? "#000000" : "#ffffff";
+                
+        //         // デザイン調整（バッジ風にするため下線を消して角丸に）
+        //         trigger.style.borderBottom = "none";
+        //         trigger.style.borderRadius = "6px";
+        //         trigger.style.textShadow = "none";
+                
+        //         trigger.classList.add('selected');
+        //     }
+        //     document.getElementById('color-modal').classList.remove('show');
+        //     document.body.classList.remove('no-scroll'); 
+        // }
+        /* --- 変更後 (currentLightness を curL に変更) --- */
         function confirmColor() {
             if(selectedColorHex) {
                 document.getElementById('q3').value = selectedColorHex;
                 const trigger = document.getElementById('color-trigger');
                 trigger.innerText = selectedColorHex;
                 
-                // === 案3: 背景色バッジ化 ===
                 // 背景色を選択した色にする
                 trigger.style.backgroundColor = selectedColorHex;
                 
-                // 明度(currentLightness: 0~100) に応じて文字色を白/黒に振り分け
-                // 50%より明るい色は黒文字、暗い色は白文字で見やすくする
-                trigger.style.color = (currentLightness > 50) ? "#000000" : "#ffffff";
+                // ▼▼▼ 修正: 操作中の明度変数 'curL' を使用して判定 ▼▼▼
+                // 明度(0~100)が50より大きい(明るい)なら黒文字、それ以外なら白文字
+                trigger.style.color = (curL > 50) ? "#000000" : "#ffffff";
                 
-                // デザイン調整（バッジ風にするため下線を消して角丸に）
+                // デザイン調整
                 trigger.style.borderBottom = "none";
                 trigger.style.borderRadius = "6px";
                 trigger.style.textShadow = "none";
