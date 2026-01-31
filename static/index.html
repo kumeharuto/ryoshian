@@ -1254,7 +1254,7 @@
             new QRCode(container, { 
                 text: window.location.origin + "/static/info.html", 
                 width: 140, height: 140, 
-                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.H 
+                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L 
             });
         }
 
@@ -1265,7 +1265,7 @@
             new QRCode(container, { 
                 text: url, 
                 width: 140, height: 140,
-                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.H
+                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
             });
         }
 
@@ -1375,7 +1375,7 @@ async function submitForm(btn) {
                 new QRCode(qrLoading, { 
                     text: window.location.origin + "/static/info.html", 
                     width: 120, height: 120,
-                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.H
+                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
                 });
             }
 
