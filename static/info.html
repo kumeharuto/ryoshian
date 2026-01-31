@@ -98,7 +98,30 @@
         }
         .menu-sub { font-size: 0.7rem; color: #888; display: block; margin-top: 5px; }
 
+
+        /* ▼▼▼ 追加: メニュー内閉じるボタンのスタイル ▼▼▼ */
+        .menu-close-btn {
+            position: absolute;
+            bottom: 80px; /* 下からの位置 */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s, transform 0.1s;
+        }
+        .menu-close-btn:hover { opacity: 1; }
+        .menu-close-btn:active { transform: translateX(-50%) scale(0.95); }
+        
+        .menu-close-icon { font-size: 3rem; font-weight: 100; line-height: 0.6; margin-bottom: 10px; }
+        .menu-close-text { font-size: 0.8rem; letter-spacing: 0.2em; font-family: var(--font-main); }
+        /* ▲▲▲ 追加ここまで ▲▲▲ */
+
         .container { width: 100%; max-width: 650px; margin: 0 auto; padding: 120px 25px 60px; position: relative; z-index: 1; }
+
 
         .content-section { margin-bottom: 120px; color: #ddd; line-height: 2.3; text-align: justify; scroll-margin-top: 100px; }
         .content-section h3 { text-align: center; font-size: 1.8rem; margin-bottom: 60px; letter-spacing: 0.2em; }
@@ -164,8 +187,7 @@
             <div class="hamburger" onclick="toggleMenu()" style="margin-left:15px;"><span></span><span></span><span></span></div>
         </div>
     </div>
-
-    <div id="menu-overlay">
+<div id="menu-overlay">
         <ul class="menu-list">
             <li><div class="menu-item text-marbling" onclick="scrollToSection('concept')">Concept<span class="menu-sub lang-jp">コンセプト</span><span class="menu-sub lang-en">Core idea</span></div></li>
             <li><div class="menu-item text-marbling" onclick="scrollToSection('explanation')">Explanation<span class="menu-sub lang-jp">作品＆用語解説</span><span class="menu-sub lang-en">Guide & key terms</span></div></li>
@@ -174,7 +196,12 @@
             <li><div class="menu-item text-marbling" onclick="scrollToSection('exhibition')">展示情報<span class="menu-sub lang-en">Info</span></div></li>
             <li><div class="menu-item text-marbling" onclick="scrollToSection('about')">About Us<span class="menu-sub lang-jp">プロジェクト紹介</span><span class="menu-sub lang-en">Project & team</span></div></li>
         </ul>
-    </div>
+
+        <div class="menu-close-btn" onclick="toggleMenu()">
+            <div class="menu-close-icon">×</div>
+            <!-- <div class="menu-close-text">CLOSE</div> -->
+        </div>
+        </div>
 
     <div class="container">
         
