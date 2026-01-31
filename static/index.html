@@ -632,19 +632,20 @@
             <div class="section-header" style="margin-bottom:30px;">
                 <h2 style="font-size:1.2rem;"><span class="lang-jp">好きなもの</span><span class="lang-en">Likes</span></h2>
             </div>
-            <div class="input-group centered-group">
+            
+            <div class="input-group centered-group" style="margin-bottom: 30px;">
                 <textarea id="q18" class="clean-textarea" rows="4" placeholder="自由記述（例：海、雨音、ネオン、金属、森 など）/ Free text (e.g., sea, rain, neon, metal, forest)"></textarea>
             </div>
-            <div class="section-header" style="margin-bottom:1px;">
+            <div class="section-header" style="margin-top: 30; margin-bottom: 15px;">
                 <h2 style="font-size:1.2rem;"><span class="lang-jp">画像奉納</span><span class="lang-en">Image Offering</span></h2>
             </div>
-            <div class="qr-section" >
+            
+            <div class="qr-section" style="margin-top: 0;">
                 <label class="lang-jp">スマホで読み取ってください</label><label class="lang-en">Scan with your smartphone</label>
                 <div id="qrcode"></div>
                 <img id="received-image" class="received-thumb">
                 <button id="reset-img-btn" class="hidden" onclick="resetImage()" style="margin-top:25px; background:none; border:none; color:#fff; border-bottom:1px solid #fff; cursor:pointer; font-size:0.8rem;">× <span class="lang-jp">取り消す</span><span class="lang-en">Cancel</span></button>
             </div>
-
             <button class="btn-entry" onclick="submitForm(this)">Submit</button>
         </div>
     </div>
