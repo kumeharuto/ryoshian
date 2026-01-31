@@ -22,7 +22,6 @@
             --rand-y: 50%;
         }
 
-
         /* 背景動画のスタイル */
         #bg-video {
             position: fixed;
@@ -30,35 +29,29 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 画面いっぱいに広げ、アスペクト比を維持して切り抜き */
-            z-index: -2; /* コンテンツより後ろに配置 */
+            object-fit: cover;
+            z-index: -2;
             pointer-events: none;
         }
 
-        /* 動画の上に被せる半透明のオーバーレイ（文字の可読性を上げるため） */
         .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* 0.4の部分を大きくすると暗くなります */
+            background: rgba(0, 0, 0, 0.4);
             z-index: -1;
         }
 
-        /* 既存のbodyの背景設定を調整 */
         body {
-            background-color: #000; /* 動画が読み込まれるまでの待機色 */
+            background-color: #000;
             color: var(--text-color);
             font-family: var(--font-main); margin: 0; padding: 0;
             min-height: 100vh; display: flex; flex-direction: column; align-items: center; overflow-x: hidden;
-            touch-action: manipulation; /* ダブルタップズームを抑制 */
+            touch-action: manipulation;
         }
         body.no-scroll { overflow: hidden !important; height: 100vh; touch-action: none; }
-
-        /* 背景動画 */
-        /* #bg-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-        .video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.75); z-index: -1; } */
 
         /* マーブリング設定 */
         .text-marbling {
@@ -157,8 +150,9 @@
             -webkit-background-clip: text; background-clip: text; color: transparent;
             transform: scale(0.98);
         }
-/* ボックス型に変更 */
-.clean-input { 
+
+        /* ボックス型に変更 */
+        .clean-input { 
             width: 100%; 
             background: rgba(255,255,255,0.05); /* 背景色追加 */
             border: 1px solid #444; /* 全周ボーダーに変更 */
@@ -222,21 +216,6 @@
             background-color: red; /* JavaScriptで動的に変更 */
             cursor: crosshair;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        /* カラーピッカーのポインター（白抜きの円） */
-        .picker-pointer {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            background: transparent;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-            pointer-events: none; /* ポインター自体がタッチを邪魔しないようにする */
-            z-index: 10;
-            transform: translate(-50%, -50%); /* 中心をタッチ位置に合わせる */
-            will-change: top, left;
-            transform: translate(-50%, -50%);
         }
         .color-preview-box {
             width: 60px; height: 60px; border-radius: 50%; border: 2px solid #fff;
@@ -461,7 +440,7 @@
             <h4 class="lang-jp">演算する彼岸</h4><h4 class="lang-en">The Computed Higan</h4>
             <p class="lang-jp">彼岸は、本来「向こう側」ではなく、「到達の形式」そのものかもしれない。人間の理解が追いつかない速度で、しかし確かに“答え”だけは生成される。そうした計算の暗がりに、彼岸を仮置きする。ここで演算は、意味を説明するためではなく、説明不能なまま成立してしまう事実を提示するために働く。鑑賞者は理解ではなく、適合でそれに触れる。</p>
             <p class="lang-en">Higan (the other shore) may not be a "place over there," but rather the "mode of arrival" itself. Answers are generated at velocities beyond human comprehension, yet they undeniably exist as "answers." In this computational obscurity, we provisionally place Higan. Here, computation does not explain meaning, but presents a fact that stands despite being inexplicable. The viewer encounters it not through understanding, but through fit.</p>
-            <h4 class="lang-jp">二〇卌五</h4><h4 class="lang-en">二〇卌五 (2〇45)</h4>
+            <h4 class="lang-jp">二〇卌五</h4><h4 class="lang-en">二〇卌五 (2○45)</h4>
             <p class="lang-jp">二〇卌五は、ひとつの記法である。二〇二五の「二」に棒を二本足して「卌（40）」とし、2025と2045を一本の線でつなぐ。「人間が追えない計算」が常態化し、結果だけが日常へ降りてくる地点。そこでは、正しさの証明は人間の手を離れ、受け取ることだけが残る。シンギュラリティが“遠い未来”として語られる一方で、その影はすでに現在の延長上に差している。</p>
             <p class="lang-en">二〇卌五 is a notation, not just a date. By adding two strokes to the "二" (two) of 2025, it becomes "卌" (forty), linking 2025 and 2045 as a single line. It marks the point where "computation humans cannot follow" becomes ordinary, and only the results descend into daily life. Proof of truth detaches from human hands, leaving only reception. While singularity is spoken of as a "distant future," its shadow is already cast upon the extension of the present.</p>
         </div>
@@ -496,7 +475,6 @@
 
             <p style="margin-top: 40px; font-size: 1.1rem; letter-spacing: 0.05em;">We are GOKURAKU FINE ARTS.</p>
     
-            <!-- ロゴ画像 -->
             <div style="margin: 50px auto;">
                 <img src="/static/logo.PNG" alt="GOKURAKU FINE ARTS" style="max-width: 200px; height: auto;">
             </div>
@@ -584,13 +562,6 @@
             </div>
 
             <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">年齢</span><span class="lang-en">Age</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <input type="number" id="q2" class="clean-input" inputmode="numeric">
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
                 <h2 style="font-size:1.2rem;"><span class="lang-jp">好きな色</span><span class="lang-en">Favorite Color</span></h2>
             </div>
             <div class="input-group centered-group">
@@ -611,16 +582,6 @@
                 <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q4_1" min="0" max="3" value="0" step="1" oninput="updLbl(this,'labels-q4_1')"></div>
             </div>
             <div class="input-group">
-                <div class="slider-labels" id="labels-q4_2">
-                    <div class="lbl-item"><span class="lang-jp">晴天</span><span class="lang-en">Sun</span></div>
-                    <div class="lbl-item"><span class="lang-jp">曇天</span><span class="lang-en">Cloud</span></div>
-                    <div class="lbl-item"><span class="lang-jp">雨天</span><span class="lang-en">Rain</span></div>
-                    <div class="lbl-item"><span class="lang-jp">雷光</span><span class="lang-en">Lightn</span></div>
-                    <div class="lbl-item"><span class="lang-jp">星空</span><span class="lang-en">Stars</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q4_2" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q4_2')"></div>
-            </div>
-            <div class="input-group">
                 <div class="slider-labels" id="labels-q4_3">
                     <div class="lbl-item"><span class="lang-jp">春</span><span class="lang-en">Spring</span></div>
                     <div class="lbl-item"><span class="lang-jp">夏</span><span class="lang-en">Summer</span></div>
@@ -632,20 +593,6 @@
 
             <div class="section-divider">⸻</div>
             
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">行動</span><span class="lang-en">Approach</span></h2>
-            </div>
-            <div class="input-group">
-                <div class="slider-labels" id="labels-q5">
-                    <div class="lbl-item"><span class="lang-jp">流れに乗る</span><span class="lang-en">Passive</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">流れを動かす</span><span class="lang-en">Active</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q5" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q5')"></div>
-            </div>
-
             <div class="section-header" style="margin-bottom:30px;">
                 <h2 style="font-size:1.2rem;"><span class="lang-jp">住処</span><span class="lang-en">Environment</span></h2>
             </div>
@@ -660,136 +607,6 @@
                 <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q6_1" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q6_1')"></div>
             </div>
             <div class="input-group">
-                <div class="slider-labels" id="labels-q6_2">
-                    <div class="lbl-item"><span class="lang-jp">喧騒</span><span class="lang-en">Hectic</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">静寂</span><span class="lang-en">Calm</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q6_2" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q6_2')"></div>
-            </div>
-            <div class="input-group">
-                <div class="slider-labels" id="labels-q6_3">
-                    <div class="lbl-item"><span class="lang-jp">現実</span><span class="lang-en">Real</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">夢想</span><span class="lang-en">Dreamlike</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q6_3" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q6_3')"></div>
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">好きな香り</span><span class="lang-en">Scent</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q7">
-                    <div class="lbl-item"><span class="lang-jp">フローラル</span><span class="lang-en">Floral</span></div>
-                    <div class="lbl-item"><span class="lang-jp">フルーティ</span><span class="lang-en">Fruity</span></div>
-                    <div class="lbl-item"><span class="lang-jp">ウッディ</span><span class="lang-en">Woody</span></div>
-                    <div class="lbl-item"><span class="lang-jp">スパイシー</span><span class="lang-en">Spicy</span></div>
-                    <div class="lbl-item"><span class="lang-jp">スモーキー</span><span class="lang-en">Smoky</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q7" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q7')"></div>
-            </div>
-
-            <div class="section-divider">⸻</div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">旅行に行くなら</span><span class="lang-en">Destination</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <input type="text" id="q8" class="clean-input" placeholder="国や都市 / Country or City">
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">願いが向くのは</span><span class="lang-en">Wish Direction</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q9">
-                    <div class="lbl-item"><span class="lang-jp">過去</span><span class="lang-en">Past</span></div>
-                    <div class="lbl-item"><span class="lang-jp">現在</span><span class="lang-en">Now</span></div>
-                    <div class="lbl-item"><span class="lang-jp">未来</span><span class="lang-en">Future</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q9" min="0" max="2" value="0" step="1" oninput="updLbl(this,'labels-q9')"></div>
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">エネルギー源</span><span class="lang-en">Drive</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q10">
-                    <div class="lbl-item"><span class="lang-jp">探求</span><span class="lang-en">Exploration</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">安全</span><span class="lang-en">Security</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q10" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q10')"></div>
-            </div>
-
-            <div class="section-divider">⸻</div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">因果観</span><span class="lang-en">Causality</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q11">
-                    <div class="lbl-item"><span class="lang-jp">因果</span><span class="lang-en">Causal</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">偶然</span><span class="lang-en">Random</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q11" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q11')"></div>
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">慈悲観</span><span class="lang-en">Compassion</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q12">
-                    <div class="lbl-item"><span class="lang-jp">自身のため</span><span class="lang-en">Self</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">他者のため</span><span class="lang-en">Others</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q12" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q12')"></div>
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">無常観</span><span class="lang-en">Impermanence</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q13">
-                    <div class="lbl-item"><span class="lang-jp">受け入れる</span><span class="lang-en">Accept</span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span></span></div>
-                    <div class="lbl-item"><span class="lang-jp">抗う</span><span class="lang-en">Resist</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q13" min="0" max="4" value="0" step="1" oninput="updLbl(this,'labels-q13')"></div>
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">死生観</span><span class="lang-en">Life & Death</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <div class="slider-labels" id="labels-q14">
-                    <div class="lbl-item"><span class="lang-jp">肉体に留まる</span><span class="lang-en">Remain Embodied</span></div>
-                    <div class="lbl-item"><span class="lang-jp">オンラインへ移行する</span><span class="lang-en">Go Online</span></div>
-                </div>
-                <div class="slider-wrapper"><div class="visual-track"><div class="track-dot"></div><div class="track-dot"></div></div><input type="range" id="q14" min="0" max="1" value="0" step="1" oninput="updLbl(this,'labels-q14')"></div>
-            </div>
-
-            <div class="section-divider">⸻</div>
-
-            <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">向かうなら</span><span class="lang-en">Heading Toward</span></h2>
-            </div>
-            <div class="input-group centered-group">
                 <div class="slider-labels" id="labels-q15">
                     <div class="lbl-item"><span class="lang-jp">北国</span><span class="lang-en">North</span></div>
                     <div class="lbl-item"><span></span></div>
@@ -813,32 +630,17 @@
             </div>
 
             <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">ひとつだけ残すなら</span><span class="lang-en">One Thing to Keep</span></h2>
-            </div>
-            <div class="input-group centered-group">
-                <input type="text" id="q17" class="clean-input" placeholder="※短く：1〜3語 推奨 / 1-3 words recommended">
-            </div>
-
-            <div class="section-header" style="margin-bottom:30px;">
                 <h2 style="font-size:1.2rem;"><span class="lang-jp">好きなもの</span><span class="lang-en">Likes</span></h2>
             </div>
             <div class="input-group centered-group">
                 <textarea id="q18" class="clean-textarea" rows="4" placeholder="自由記述（例：海、雨音、ネオン、金属、森 など）/ Free text (e.g., sea, rain, neon, metal, forest)"></textarea>
             </div>
-
             <div class="section-header" style="margin-bottom:30px;">
-                <h2 style="font-size:1.2rem;"><span class="lang-jp">嫌いなもの</span><span class="lang-en">Avoids</span></h2>
+            <h2 style="font-size:1.2rem;"><span class="lang-jp">画像奉納</span><span class="lang-en">Image Offering</span></h2>
             </div>
-            <div class="input-group centered-group">
-                <textarea id="q19" class="clean-textarea" rows="4" placeholder="自由記述（例：混雑、強い光、騒音、湿気、煙 など）/ Free text (e.g., crowds, harsh light, noise, humidity, smoke)"></textarea>
-            </div>
-
-            <div class="qr-section">
-                <label class="lang-jp">画像奉納</label><label class="lang-en">Image Offering</label>
+            <div class="qr-section" style="margin-bottom:30px;">
                 <label class="lang-jp">スマホで読み取ってください</label><label class="lang-en">Scan with your smartphone</label>
                 <div id="qrcode"></div>
-                <!-- <div id="qr-status" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-jp">スマホで読み取ってください</div>
-                <div id="qr-status-en" style="margin-top:15px; font-size:0.75rem; color:#666;" class="lang-en">Scan with your smartphone</div> -->
                 <img id="received-image" class="received-thumb">
                 <button id="reset-img-btn" class="hidden" onclick="resetImage()" style="margin-top:25px; background:none; border:none; color:#fff; border-bottom:1px solid #fff; cursor:pointer; font-size:0.8rem;">× <span class="lang-jp">取り消す</span><span class="lang-en">Cancel</span></button>
             </div>
@@ -904,11 +706,9 @@
         let currentHue = 0;
         let currentLightness = 50;
         let curH = 0;
-        // let curS = 50;
-        // let curL = 50;
         let isDraggingHue = false;
         let isDraggingSL = false;
-        // ▼▼▼ 変更: HSL直接管理ではなく、ポインター位置(HSV的)を管理する変数を追加 ▼▼▼
+        // HSL/HSV管理変数
         let curS = 100; // 初期値：彩度100 (HSL変換後用)
         let curL = 50;  // 初期値：輝度50  (HSL変換後用)
         let ptrX = 100; // X座標(彩度S) 0-100% (初期値:右端)
@@ -929,7 +729,8 @@
                 applyColor();
                 e.preventDefault(); // スクロール防止
             };
-            // ▼▼▼ 修正: handleSL でポインター座標(HSV)を更新する ▼▼▼
+            
+            // handleSL でポインター座標(HSV)を更新する
             const handleSL = (e) => {
                 const rect = disc.getBoundingClientRect();
                 const touch = e.touches ? e.touches[0] : e;
@@ -947,19 +748,6 @@
                 applyColor();
                 e.preventDefault(); 
             };
-            // ▲▲▲ 修正ここまで ▲▲▲
-            // const handleSL = (e) => {
-            //     const rect = disc.getBoundingClientRect();
-            //     const touch = e.touches ? e.touches[0] : e;
-            //     let x = (touch.clientX - rect.left) / rect.width;
-            //     let y = (touch.clientY - rect.top) / rect.height;
-            //     x = Math.max(0, Math.min(1, x));
-            //     y = Math.max(0, Math.min(1, y));
-            //     curS = x * 100;
-            //     curL = (1 - y) * 100;
-            //     applyColor();
-            //     e.preventDefault(); // スクロール防止
-            // };
 
             // タッチ開始
             ring.addEventListener('touchstart', (e) => { isDraggingHue = true; handleHue(e); }, {passive: false});
@@ -990,7 +778,7 @@
             });
         }
 
-        // ▼▼▼ 修正: applyColor で HSV(位置) → HSL(色) 変換を行う ▼▼▼
+        // HSV(位置) → HSL(色) 変換を行う
         function applyColor() {
             const disc = document.getElementById('color-lightness-disc');
             const preview = document.getElementById('color-preview');
@@ -1114,8 +902,10 @@
                     document.getElementById('qrcode').classList.add('hidden');
                     receivedImageBase64 = data.image_data;
                     const status = document.getElementById('qr-status');
-                    status.innerText = (currentLang === 'jp') ? "奉納完了" : "Received";
-                    status.style.color = "#fff";
+                    if (status) {
+                        status.innerText = (currentLang === 'jp') ? "奉納完了" : "Received";
+                        status.style.color = "#fff";
+                    }
                     document.getElementById('reset-img-btn').classList.remove('hidden');
                 }
             };
@@ -1134,31 +924,6 @@
             applyColor();
         }
 
-        // function confirmColor() {
-        //     if(selectedColorHex) {
-        //         document.getElementById('q3').value = selectedColorHex;
-        //         const trigger = document.getElementById('color-trigger');
-        //         trigger.innerText = selectedColorHex;
-                
-        //         // === 案3: 背景色バッジ化 ===
-        //         // 背景色を選択した色にする
-        //         trigger.style.backgroundColor = selectedColorHex;
-                
-        //         // 明度(currentLightness: 0~100) に応じて文字色を白/黒に振り分け
-        //         // 50%より明るい色は黒文字、暗い色は白文字で見やすくする
-        //         trigger.style.color = (currentLightness > 50) ? "#000000" : "#ffffff";
-                
-        //         // デザイン調整（バッジ風にするため下線を消して角丸に）
-        //         trigger.style.borderBottom = "none";
-        //         trigger.style.borderRadius = "6px";
-        //         trigger.style.textShadow = "none";
-                
-        //         trigger.classList.add('selected');
-        //     }
-        //     document.getElementById('color-modal').classList.remove('show');
-        //     document.body.classList.remove('no-scroll'); 
-        // }
-        /* --- 変更後 (currentLightness を curL に変更) --- */
         function confirmColor() {
             if(selectedColorHex) {
                 document.getElementById('q3').value = selectedColorHex;
@@ -1168,7 +933,7 @@
                 // 背景色を選択した色にする
                 trigger.style.backgroundColor = selectedColorHex;
                 
-                // ▼▼▼ 修正: 操作中の明度変数 'curL' を使用して判定 ▼▼▼
+                // 操作中の明度変数 'curL' を使用して判定
                 // 明度(0~100)が50より大きい(明るい)なら黒文字、それ以外なら白文字
                 trigger.style.color = (curL > 50) ? "#000000" : "#ffffff";
                 
@@ -1236,7 +1001,6 @@
             }, 800);
         }
 
-        // goToForm 関数を修正
         function goToForm(btn) {
             btn.classList.add('clicked');
             const landing = document.getElementById('landing-page');
@@ -1247,16 +1011,15 @@
                 document.getElementById('entry-warning').classList.add('show');
                 btn.classList.remove('clicked');
                 
-                // 追加：ヘッダーの「←」を表示
+                // ヘッダーの「←」を表示
                 document.getElementById('btn-back').classList.remove('hidden');
             }, 800);
         }
 
-        // backToTitle 関数を修正（確認ダイアログ付きでTOPへ）
         function backToTitle() { 
             const msg = (currentLang === 'jp') ? '入力を破棄してTOPに戻りますか？' : 'Discard input and return to TOP?';
             if(confirm(msg)) {
-                location.reload(); // 確実にTOP状態に戻すためリロード
+                location.reload(); 
             }
         }
 
@@ -1271,11 +1034,6 @@
                 initMarbling();
                 setTimeout(() => form.classList.remove('dissolve-in'), 800);
             }, 500);
-        }
-
-        function backToTitle() { 
-            const msg = (currentLang === 'jp') ? '入力を破棄して戻りますか？' : 'Discard input and return?';
-            if(confirm(msg)) location.reload(); 
         }
 
         function cancelLoading() { location.reload(); }
@@ -1294,13 +1052,16 @@
             const p_q17_en = "1-3 words recommended";
             const p_q18_jp = "自由記述（例：海、雨音、ネオン、金属、森 など）";
             const p_q18_en = "Free text (e.g., sea, rain, neon, metal, forest)";
-            const p_q19_jp = "自由記述（例：混雑、強い光、騒音、湿気、煙 など）";
-            const p_q19_en = "Free text (e.g., crowds, harsh light, noise, humidity, smoke)";
             
-            document.getElementById('q8').placeholder = (lang === 'jp') ? p_q8_jp : p_q8_en;
-            document.getElementById('q17').placeholder = (lang === 'jp') ? p_q17_jp : p_q17_en;
-            document.getElementById('q18').placeholder = (lang === 'jp') ? p_q18_jp : p_q18_en;
-            document.getElementById('q19').placeholder = (lang === 'jp') ? p_q19_jp : p_q19_en;
+            // 存在する要素のみプレースホルダー切り替え
+            const q8El = document.getElementById('q8');
+            if(q8El) q8El.placeholder = (lang === 'jp') ? p_q8_jp : p_q8_en;
+            
+            const q17El = document.getElementById('q17');
+            if(q17El) q17El.placeholder = (lang === 'jp') ? p_q17_jp : p_q17_en;
+            
+            const q18El = document.getElementById('q18');
+            if(q18El) q18El.placeholder = (lang === 'jp') ? p_q18_jp : p_q18_en;
             
             const colorTrigger = document.getElementById('color-trigger');
             if (!selectedColorHex) {
@@ -1317,23 +1078,27 @@
 
         function generateAboutQR() {
             const container = document.getElementById("qrcode-about");
-            container.innerHTML = "";
-            new QRCode(container, { 
-                text: window.location.origin + "/static/info.html", 
-                width: 140, height: 140, 
-                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L 
-            });
+            if(container) {
+                container.innerHTML = "";
+                new QRCode(container, { 
+                    text: window.location.origin + "/static/info.html", 
+                    width: 140, height: 140, 
+                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L 
+                });
+            }
         }
 
         function updateQRCode() {
             const container = document.getElementById("qrcode");
-            container.innerHTML = "";
-            const url = `${window.location.origin}/static/upload.html?session_id=${mySessionId}&lang=${currentLang}`;
-            new QRCode(container, { 
-                text: url, 
-                width: 140, height: 140,
-                colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
-            });
+            if(container) {
+                container.innerHTML = "";
+                const url = `${window.location.origin}/static/upload.html?session_id=${mySessionId}&lang=${currentLang}`;
+                new QRCode(container, { 
+                    text: url, 
+                    width: 140, height: 140,
+                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
+                });
+            }
         }
 
         function resetImage() {
@@ -1341,8 +1106,10 @@
             document.getElementById('received-image').style.display = 'none';
             document.getElementById('qrcode').classList.remove('hidden');
             const status = document.getElementById('qr-status');
-            status.innerText = (currentLang === 'jp') ? "スマホで読み取ってください" : "Scan with smartphone";
-            status.style.color = "#666";
+            if(status) {
+                status.innerText = (currentLang === 'jp') ? "スマホで読み取ってください" : "Scan with smartphone";
+                status.style.color = "#666";
+            }
             document.getElementById('reset-img-btn').classList.add('hidden');
         }
 
@@ -1363,7 +1130,6 @@
 
         function prevLoadingTerm() {
             clearInterval(slideTimer);
-            // 現在のインデックスを1つ戻す（0のときは最後の要素へ）
             loadingIndex = (loadingIndex - 1 + loadingContent.length) % loadingContent.length;
             updateLoadingText();
             resetProgressBar();
@@ -1390,17 +1156,13 @@
             void bar.offsetWidth; // trigger reflow
             bar.classList.add('bar-anim');
         }
-/* --- 変更後 (未入力チェックを追加した関数) --- */
-async function submitForm(btn) {
-            // ▼▼▼ 追加: 未入力チェックと確認 ▼▼▼
+
+        async function submitForm(btn) {
+            // バリデーション対象を「少ねえ版」に合わせる
             const checkList = [
                 { id: 'q1', labelJP: 'ニックネーム', labelEN: 'Nickname' },
-                { id: 'q2', labelJP: '年齢', labelEN: 'Age' },
                 { id: 'q3', labelJP: '好きな色', labelEN: 'Favorite Color' },
-                { id: 'q8', labelJP: '旅行に行くなら', labelEN: 'Destination' },
-                { id: 'q17', labelJP: 'ひとつだけ残すなら', labelEN: 'One Thing to Keep' },
-                { id: 'q18', labelJP: '好きなもの', labelEN: 'Likes' },
-                { id: 'q19', labelJP: '嫌いなもの', labelEN: 'Avoids' }
+                { id: 'q18', labelJP: '好きなもの', labelEN: 'Likes' }
             ];
 
             let emptyItems = [];
@@ -1429,7 +1191,6 @@ async function submitForm(btn) {
                     return;
                 }
             }
-            // ▲▲▲ 追加ここまで ▲▲▲
 
             if(btn) btn.classList.add('clicked');
             
@@ -1442,7 +1203,7 @@ async function submitForm(btn) {
                 new QRCode(qrLoading, { 
                     text: window.location.origin + "/static/info.html", 
                     width: 120, height: 120,
-                    colorDark : "#bfbfbf", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
+                    colorDark : "#ffffff", colorLight : "#000000", correctLevel : QRCode.CorrectLevel.L
                 });
             }
 
@@ -1456,7 +1217,19 @@ async function submitForm(btn) {
 
             const formData = new FormData();
             formData.append('image_b64', receivedImageBase64);
-            const ids = ['q1','q2','q3','q4_1','q4_2','q4_3','q5','q6_1','q6_2','q6_3','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','q18','q19'];
+            
+            // ▼▼▼ 修正: 送信するIDリストを厳選する（元のIDを維持） ▼▼▼
+            const ids = [
+                'q1',   // ニックネーム
+                'q3',   // 好きな色
+                'q4_1', // 時間帯
+                'q4_3', // 季節
+                'q6_1', // 都市⇔田舎
+                'q15',  // 北国⇔南国 (住処2: 元のq15を使用)
+                'q16',  // 還るなら
+                'q18'   // 好きなもの
+            ];
+            
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) formData.append(id, el.value || "");
