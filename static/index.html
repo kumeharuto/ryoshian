@@ -21,6 +21,14 @@
             --rand-x: 50%;
             --rand-y: 50%;
         }
+        /* ▼▼▼ 追加: 画像（QR含む）への長押し・ドラッグを禁止 ▼▼▼ */
+        img, canvas {
+            pointer-events: none;       /* 画像へのタッチ判定自体を消す（最強） */
+            -webkit-touch-callout: none; /* iOSで長押しメニューを出さない */
+            -webkit-user-drag: none;     /* ドラッグ禁止 */
+            user-select: none;           /* 選択禁止 */
+            -webkit-user-select: none;
+        }
 
         /* 背景動画のスタイル */
         #bg-video {
