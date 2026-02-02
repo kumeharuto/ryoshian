@@ -144,7 +144,7 @@
         /*ポスター＆ポップアップ用スタイル*/
         .poster-img { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto 30px; border: 1px solid #333; }
         .info-text-block { text-align: center; margin-bottom: 40px; font-feature-settings: "palt"; }
-        
+        /* ▼▼▼ 修正: ポップアップ用スタイル (スクロール制御版) ▼▼▼ */
         #opening-popup {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 9999;
@@ -154,14 +154,35 @@
         #opening-popup.show { opacity: 1; pointer-events: auto; }
         
         .popup-content {
-            width: 90%; max-width: 450px; max-height: 90vh; overflow-y: auto;
+            width: 90%; max-width: 450px;
+            max-height: 85dvh; /* 画面内に収める */
             background: #000; border: 1px solid #444; padding: 20px;
             text-align: center; position: relative;
+            display: flex; flex-direction: column; /* 縦並び */
         }
+
+        .popup-content img {
+            width: 100%; height: auto;
+            max-height: 35vh; /* 画像の高さ制限 */
+            object-fit: contain;
+            margin-bottom: 15px;
+            flex-shrink: 0; 
+        }
+
+        .popup-text-scroll {
+            flex-grow: 1;       /* 余白を埋める */
+            overflow-y: auto;   /* テキストだけスクロール */
+            margin-bottom: 15px;
+            text-align: left;
+            padding-right: 5px;
+        }
+
         .close-popup-btn {
-            margin-top: 20px; background: transparent; border: 1px solid #fff; color: #fff;
+            background: transparent; border: 1px solid #fff; color: #fff;
             padding: 10px 30px; cursor: pointer; font-family: var(--font-main);
+            flex-shrink: 0; margin: 0 auto;
         }
+        /* ▲▲▲ 強制表示系のCSSは全て削除しました ▲▲▲ */
 
         .hidden { display: none !important; }
         .lang-jp .lang-en { display: none; }
@@ -359,26 +380,39 @@
 
         <div class="footer">© GOKURAKU FINE ARTS</div>
     </div>
-
     <div id="opening-popup">
         <div class="popup-content">
-            <img src="/static/ryoshian_poster_web2.jpg" alt="Exhibition Poster" style="width:100%; height:auto; margin-bottom:1px;">
+            <img src="/static/ryoshian_poster_web2.jpg" alt="Exhibition Poster">
             
-            <div style="font-size:0.9rem; line-height:1.6; color:#ddd; margin-bottom:0;">
-                <p class="lang-jp" style="margin-bottom:10px; margin-top:0;">
-                    <strong>横幅美術大学 映像メディアデザイン</strong><br>
-                    3号館2階 特別展示室(3-23B)<br>
-                    学内展：2/12(thu.) - 15(sun.)<br>
-                    学外展：未定
-                </p>
-                <p class="lang-en" style="margin-bottom:0; margin-top:0; font-size:0.8rem; color:#aaa;">
-                    <strong>Yokohama Univ. of Art & Design</strong><br>
-                    Bldg.3 2F, Special Exhibition Room (3-23B)<br>
-                    Feb 12 (Thu) - 15 (Sun)
-                </p>
+            <div class="popup-text-scroll">
+                <div style="font-size:0.9rem; line-height:1.6; color:#ddd;">
+                    
+                    <div style="margin-bottom:20px; text-align:center">
+                        <strong style="font-size:1.0rem; border-bottom:1px solid #444; padding-bottom:2px; display:inline-block;">
+                            横幅美術大学 映像メディアデザイン
+                        </strong>
+                        <div style="color:#888; font-size:0.75rem; margin-top:4px; line-height:1.4; text-align:center">
+                            Yokohama Univ. of Art & Design<br>Image Media Design
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:15px; text-align:center">
+                        <span>3号館2階 特別展示室(3-23B)</span>
+                        <div style="color:#888; font-size:0.75rem; margin-top:4px; line-height:1.4;">
+                            Bldg.3 2F, Special Exhibition Room (3-23B)
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:0; text-align:center">
+                        <span>学内展：2/12(thu.) - 15(sun.)<br>学外展：未定</span>
+                        <div style="color:#888; font-size:0.75rem; margin-top:4px; line-height:1.4;">
+                            Campus Exhibition: Feb 12 (Thu) - 15 (Sun)<br>Public Exhibition: TBD
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            
-            <button class="close-popup-btn" onclick="closePopup()" style="margin-top:1px;">Close</button>
+            <button class="close-popup-btn" onclick="closePopup()">Close</button>
         </div>
     </div>
     <script>
